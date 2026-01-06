@@ -143,15 +143,17 @@ ARGS=(
   --rpc-bind-ip "${RPC_BIND_IP}"
   --rpc-bind-port "${RPC_PORT}"
   --confirm-external-bind
-
+  
   # Route outbound networking via Tor SOCKS
   --proxy "${TOR_SOCKS_HOST}:${TOR_SOCKS_PORT}"
-  --proxy-allow-dns-leaks 0
   --tx-proxy "tor,${TOR_SOCKS_HOST}:${TOR_SOCKS_PORT},disable_noise"
 )
 
-if [[ "${PRUNE_BLOCKCHAIN}" == "1" ]]; then
-  ARGS+=( --prune-blockchain )
+# If set to "1", allow DNS leaks (NOT recommended). Default is "0" (do NOT allow).
+: "${PROXY_ALLOW_DNS_LEAKS:=0}"
+if [[ "${PROXY_ALLOW_DNS_LEAKS}" == "1" ]]; then
+  echo "[warn] PROXY_ALLOW_DNS_LEAKS=1 enabled (DNS may bypass Tor)."
+  ARGS+=( --proxy-allow-dns-leaks )
 fi
 
 if [[ "${RESTRICTED_RPC}" == "1" ]]; then
@@ -163,6 +165,5 @@ if [[ -n "${RPC_LOGIN}" ]]; then
 fi
 
 echo "[init] starting monerod (WAN via Tor SOCKS; wallet RPC via LAN/host port binding)."
-echo "[init] monerod args: ${ARGS[*]}"
 
-exec gosu monero sh -lc 'exec monerod "$@" </dev/null' -- "${ARGS[@]}"
+exec gosu monero monerod "${ARGS[@]}"
