@@ -4,8 +4,8 @@ set -euo pipefail
 # ----------------------------
 # Persisted paths (bind mounts)
 # ----------------------------
-: "${DATA_DIR:=/monero/data}"
-: "${BLOCKCHAIN_DIR:=/monero/blockchain}"
+: "${DATA_DIR:=/data}"
+: "${BLOCKCHAIN_DIR:=/blockchain}"
 
 # ----------------------------
 # Monerod ports / binding
@@ -42,7 +42,7 @@ set -euo pipefail
 mkdir -p "${DATA_DIR}" "${BLOCKCHAIN_DIR}"
 chown -R monero:monero "${DATA_DIR}" "${BLOCKCHAIN_DIR}"
 
-# Ensure blockchain LMDB lives under /monero/blockchain/lmdb
+# Ensure blockchain LMDB lives under /blockchain/lmdb
 mkdir -p "${BLOCKCHAIN_DIR}/lmdb"
 
 # If /data/lmdb exists and is not a symlink, refuse (prevents chain being written to the wrong disk)
