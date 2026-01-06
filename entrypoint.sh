@@ -163,4 +163,4 @@ if [[ -n "${RPC_LOGIN}" ]]; then
 fi
 
 echo "[init] starting monerod (WAN via Tor SOCKS; wallet RPC via LAN/host port binding)."
-exec gosu monero monerod "${ARGS[@]}"
+exec gosu monero monerod "${ARGS[@]}" </dev/null
