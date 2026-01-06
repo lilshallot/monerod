@@ -4,7 +4,7 @@ services:
   # Tor as Proxy
   # --------------------
   tor:
-    image: lilshallot/tor:latest
+    image: ghcr.io/lilshallot/tor:latest
     container_name: tor
     restart: unless-stopped
 
@@ -67,7 +67,7 @@ services:
   # Monero Daemon Node
   # --------------------
   monerod:
-    image: lilshallot/monerod:latest
+    image: ghcr.io/lilshallot/monerod:latest
     container_name: monerod
     restart: unless-stopped
 
